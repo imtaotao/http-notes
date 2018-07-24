@@ -1,0 +1,32 @@
+#vim
+*~
+*.sw?
+
+# python
+*.pyc
+
+# misc editing tools
+.vscode/
+tags
+
+#mac
+*.DS_Store
+
+# build tools
+node_modules/
+
+# logfiles
+*.log
+.idea/
+
+# build artifacts
+dist/
+heartIDE/
+
+# package-lock.json
+./package-lock.json
+
+# orlg
+*.orlg
+
+typescript
