@@ -1,4 +1,4 @@
-# HTTP 报文
+# 3.HTTP 报文
 本章内容较多，主要介绍如下：
 
 - 报文是如何流动的
@@ -74,7 +74,7 @@ HTTP 报文是简单的格式化数据块。每条报文由三部分组成，对
   | GET /testhi-there.txt HTTP/1.1 |  起始行     | HTTP/1.0 200 OK                 |
   |--------------------------------|            |---------------------------------|
   | Accept: text/*                 |            | Content-type: text/plain        |
-  | Host: www.joes-hardware.com    |   首部      | Content-length: 19              |
+  | Host: www.joes-hardware.com    |   首部      | Content-Length: 19              |
   |--------------------------------|            |---------------------------------|
                                                 |                                 |
                                                 | Hi! I'm a message!              |
@@ -145,6 +145,9 @@ HTTP 定义了一组被称为安全方法的方法。GET 和 HEAD 方法都被�
 
 + **GET**<br>
 GET 是最常用的方法。通常用于请求服务器发送某个资源。HTTP/1.1 要求服务器实现此方法
+<br><br>
+
+示例：
 ```
     请求报文
   |----------------------------------------|
@@ -170,7 +173,9 @@ HEAD 方法与 GET 方法行为类似，但服务器在响应中只返回首部�
   1) 在不获取资源的情况下了解资源情况（比如判断其类型）
   2) 通过查看响应首部的状态码，看看某个对象是否存在
   3) 通过查看首部，测试资源是否被修改了
+<br><br>
 
+示例：
 ```
     请求报文
   |-----------------------------------------|
@@ -190,14 +195,16 @@ HEAD 方法与 GET 方法行为类似，但服务器在响应中只返回首部�
 + **PUT**<br>
 与 GET 从服务器读取文档相反，PUT 方法会向服务器写入文档。有些发布系统允许用户创建 web 页面，并用 PUT 直接将其安装到 web 服务器上去。PUT 方法的语义就是让服务器用请求的主体部分来创建一个由所请求的 URL 命名的新文档，如果那个 URL 已经存在，就用这个主体替代它。<br>
 因为 PUT 方法允许用户对内容进行修改，所以很多 web 服务器都要求在执行 PUT 之前，用密码登录。详情见[第十二章](../three_part/chapter_twelve.md)
+<br><br>
 
+示例：
 ```
     请求报文
   |----------------------------------------|
   | PUT /product-list.txt HTTP/1.1         |
   | Host: www.joes-hardware.com            |
   | Content-type: text/plain               |
-  | Content-length: 34                     |
+  | Content-Length: 34                     |
   |                                        |
   | Updated product list coming soon!      |
   |----------------------------------------|
@@ -219,29 +226,31 @@ POST 方法起初是用来向服务器输入数据的（POST 用于向服务器�
 + **TRACE**<br>
 客户端发起一个请求时，这个请求可能会穿过防火墙、代理、网关或者其他一些应用程序。每个中间节点都可能会修改原始的 HTTP 请求。TRACE 方法允许客户端在最终将请求发送给服务器时，看看它变成了什么样子<br>
 TRACE 请求会在目的地服务器端发起一个 “环回” 诊断。行程最后一站的服务器会弹回一条 TRACE 响应，并在响应主体中携带它收到的原始请求报文。这样客户端就可以查看所有 HTTP 中间应用程序的请求/响应链上，原始报文是否、以及、如何被毁坏或修改
+<br><br>
 
+示例：
 ```
     请求报文          
-  |----------------------------------|        |----------------------------------|
-  | TRACE /product-list.txt HTTP/1.1 |  代理   | TRACE /product-list.txt HTTP/1.1 | 
-  | Accept: *                        | -----> | Host: www.joes-hardware.com      |
-  | Host: www.joes-hardware.com      |        | Accept: *                        |
-  |----------------------------------|        | Via: 1.1 proxy3.company.com      |
-                                              |----------------------------------| 
-                                                              |
-                                                              |
-                                                              v
-                                                响应报文
-  |----------------------------------|        |----------------------------------|
-  | HTTP/1.1 200 OK                  |        | HTTP/1.1 200 OK                  |
-  | Content-Type: text/plain         |        | Content-Type: text/plain         |
-  | Content-Length: 96               |        | Content-Length: 96               |
-  | Via: 1.1 proxy3.company.com      |  代理   |                                  |
-  |                                  | <----- | TRACE /product-list.txt HTTP/1.1 |
-  | TRACE /product-list.txt HTTP/1.1 |        | Host: www.joes-hardware.com      |
-  | Host: www.joes-hardware.com      |        | Accept: *                        |
-  | Accept: *                        |        | Via: 1.1 proxy3.company.com      |
-  | Via: 1.1 proxy3.company.com      |        |----------------------------------|
+  |----------------------------------|            |----------------------------------|
+  | TRACE /product-list.txt HTTP/1.1 |  经过代理    | TRACE /product-list.txt HTTP/1.1 | 
+  | Accept: *                        | -------->  | Host: www.joes-hardware.com      |
+  | Host: www.joes-hardware.com      |            | Accept: *                        |
+  |----------------------------------|            | Via: 1.1 proxy3.company.com      |
+                                                  |----------------------------------| 
+                                                                  |
+                                                                  |
+                                                                  v
+                                                    响应报文
+  |----------------------------------|            |----------------------------------|
+  | HTTP/1.1 200 OK                  |            | HTTP/1.1 200 OK                  |
+  | Content-Type: text/plain         |            | Content-Type: text/plain         |
+  | Content-Length: 96               |            | Content-Length: 96               |
+  | Via: 1.1 proxy3.company.com      |  经过代理    |                                  |
+  |                                  | <--------  | TRACE /product-list.txt HTTP/1.1 |
+  | TRACE /product-list.txt HTTP/1.1 |            | Host: www.joes-hardware.com      |
+  | Host: www.joes-hardware.com      |            | Accept: *                        |
+  | Accept: *                        |            | Via: 1.1 proxy3.company.com      |
+  | Via: 1.1 proxy3.company.com      |            |----------------------------------|
   |----------------------------------|
 ```
 TRACE 方法主要用于诊断，用于验证请求是否如愿穿过了请求/响应链，也可以用来查看代理和其他应用程序对用户请求所产生的效果<br>
@@ -250,3 +259,49 @@ TRACE 方法主要用于诊断，用于验证请求是否如愿穿过了请求/�
 TRACE 请求中不能带有实例的主体部分。TRACE 响应的实体主体部分包含了响应服务器收到的请求的精确副本
 
 + **OPTIONS**<br>
+OPTIONS 方法请求 web 服务器告知其支持的各种功能。可以询问服务器通常支持哪些方法，或者对某些特殊资源支持哪些方法（有些服务器可能只支持对一些特殊类型的对象使用特定的操作）<br>
+这为客户端提供了一种手段，使其不用实际访问资源就能判定访问各种资源的最优方式
+<br><br>
+
+示例：
+```
+    请求报文                                    响应报文
+  |-----------------------------|           |--------------------------------|   由于请求的是可为所有资源
+  | OPTIONS * HTTP/1.1          |           | HTTP/1.1 200 OK                |   使用的选项，所以服务器仅
+  | Host: www.joes-hardware.com |           | Allow: GET, POST, PUT, OPTIONS |   返回了它支持的可通用于各
+  | Accept: *                   |           | Content-Length: 0              |   种资源的方法
+  |-----------------------------|           |--------------------------------|
+```
+
++ **DELETE**<br>
+DELETE 方法所做的事情就是请服务器删除请求 URL 所指定的资源。但是，客户端应用程序无法保证删除操作一定会被执行。因为 HTTP 规范允许服务器在不通知客户端的情况下撤销请求
+
+<br><br>
+
+示例：
+```
+    请求报文（客户端认为资源以及被删除了）                 响应报文
+  |-----------------------------------|           |-----------------------------|
+  | DELETE /product-list.txt HTTP/1.1 |  ---->    | HTTP/1.1 200 OK             |  从服务器磁盘中删除文件
+  | Host: www.joes-hardware.com       |           | Content-Type: text/plain    |  product-list.txt
+  |-----------------------------------|  <----    | Content-Length: 54          |
+                                                  |                             |
+                                                  | I have your delete request, |
+                                                  | will take time to process.  |
+                                                  |-----------------------------|
+```
+
++ **扩展方法**<br>
+HTTP 被设计成字段可扩展的，这样新的特性就不会使老的软件失效了。扩展方法指的就是没有在 HTTP/1.1 规范中定义的方法。以下为一些常用的扩展方法：
+
+| 方法    | 描述                                        |
+|-------|-------------------------------------------|
+| LOCK  | 允许用户“锁定”资源 -- 比如在编辑某个资源的时候将其锁定，防止别人同时对其修改 |
+| MKCOL | 允许用户创建资源                                  |
+| COPY  | 便于在服务器上复制资源                               |
+| MOVE  | 在服务器上移动资源                                 |
+
+并不是所有的扩展方法都是在正式规范中定义的。所以最好对扩展方法宽容一些，如果能够在不破坏端到端行为的情况下，代理应该尝试传递这些报文，如果可能会破坏端到端行为，则应该以 `501 Not Implemented` 状态码进行响应。按照惯例，“对所发送的内容要求严一点，对所接收的内容宽容一点” 来处理扩展方法
+
+
+## 状态码
