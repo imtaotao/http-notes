@@ -788,6 +788,5 @@ HTTP/1.1 向协议引入了信息性状态码，关于其复杂性和感知价�
 
 
 <br><br><br>
-[上一章：URL 与 资源](./chapter_two.md)
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-[下一章：连接管理](./chapter_four.md)
+<p align="left">[上一章：URL 与 资源](./chapter_two.md)</p>
+<p align="right">[下一章：连接管理](./chapter_four.md)</p>
