@@ -68,3 +68,9 @@ URL 最重要的三个部分是**方案**（scheme）、**主机**（host）和*
 + **永久统一资源定位符(PURL)** 就是用 url 来实现 urn 的一个例子，详情可以见 http://purl.oclc.org
 
 + url 转换为 urn 是一项巨大的工程，而且标准化的进程很慢，需要很多改动，标准主体的一致性、http 应用程序的修改等。现阶段 url 还有很大的能量，而且普通用户已经很熟悉了 url 的语法，尽管 url 有一些缺陷，但是也不是现阶段最紧迫的问题，所以，在可预见的未来，因特网资源仍然会以 url 来命名
+
+
+<br><br><br>
+[**上一章：HTTP 的简要介绍**](./chapter_one.md)
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;
+[**下一章：HTTP 报文**](./chapter_three.md)
