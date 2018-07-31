@@ -32,7 +32,8 @@ HTTP 要传送一条报文时，会以流的形式将报文数据的内容通过
 ```
   <源 IP 地址、源端端口号、目的 IP 地址、目的端口号>
 ```
-&nbsp;&nbsp;&nbsp;&nbsp;这四个值一起唯一地定义了一条连接。两条不同的 TCP 连接不能拥有 4 个完全相同的地址组件值
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+这四个值一起唯一地定义了一条连接。两条不同的 TCP 连接不能拥有 4 个完全相同的地址组件值
 
 <br><br>
 + **用 TCP 套接字编程**<br>
@@ -149,7 +150,8 @@ Nagle 算法会引发几种 HTTP 性能问题：
   + 小的 HTTP 报文可能无法填满一个分组，可能会因为等待那些永远不会到来的额外数据而产生时延
   + Nagle 算法与延迟确认之间的交互存在问题 —— Nagle 算法会阻止数据的发送，直到有确认分组抵达为止，但确认分组自身会被延迟确认算法延迟 100 ～ 200 毫秒
 
-&nbsp;&nbsp;&nbsp;&nbsp;HTTP 应用程序常常会在自己的栈中设置参数 TCP_NODELAY，禁用 Nagle 算法，提高性能
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+HTTP 应用程序常常会在自己的栈中设置参数 TCP_NODELAY，禁用 Nagle 算法，提高性能
 
 <br><br>
 + **TIME_WAIT 累积与端口耗尽**<br>
@@ -164,7 +166,8 @@ Nagle 算法会引发几种 HTTP 性能问题：
   <client-IP, source-port, server-IP, 80>
 ```
 
-&nbsp;&nbsp;&nbsp;&nbsp;客户端每次连接到服务器上去时，都会获得一个新的源端口，以实现连接的唯一性。但由于可用源端口的数量有限（比如，60 000 个），而且在 2MSL 秒（比如，120 秒）内连接是无法重用的，连接率就被限制在了 60 000/120=500 次 / 秒。如果再不断进行优化，并且服务器的连接率不高于 500 次 / 秒，就可确保不会遇到 TIME_WAIT 端口耗尽问题
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+客户端每次连接到服务器上去时，都会获得一个新的源端口，以实现连接的唯一性。但由于可用源端口的数量有限（比如，60 000 个），而且在 2MSL 秒（比如，120 秒）内连接是无法重用的，连接率就被限制在了 60 000/120=500 次 / 秒。如果再不断进行优化，并且服务器的连接率不高于 500 次 / 秒，就可确保不会遇到 TIME_WAIT 端口耗尽问题
 
 <br><br>
 ## HTTP 连接的处理
@@ -174,13 +177,13 @@ HTTP 的 Connection 首部字段中有一个由逗号分隔的连接标签列表
   + 任意标签值，用于描述此连接的非标准选项
   + 值 close，说明操作完成之后需关闭这条持久连接
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 如果连接标签中包含了一个 HTTP 首部字段的名称，那么这个首部字段就包含了与一些连接有关的信息，不能将其转发出去。在将报文转发出去之前，必须删除 Connection 首部列出的所有首部字段。由于 Connection 首部可以防止无意中对本地首部的转发，因此将逐跳首部名放入 Connection 首部被称为 “对首部的保护”。还会有一些一定不能被代理转发的逐跳首部（有关 Connection 首部详情见附录 C）。其中包括：
-
   + Prxoy-Authenticate
   + Proxy-Connection
   + Transfer-Encoding
   + Upgrade
 
-<br><br><br>
+
+<br>
 + **串行事务处理时延**<br>
