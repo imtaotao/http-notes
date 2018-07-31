@@ -172,8 +172,9 @@ HTTP 的 Connection 首部字段中有一个由逗号分隔的连接标签列表
   + 任意标签值，用于描述此连接的非标准选项
   + 值 close，说明操作完成之后需关闭这条持久连接
 
-&nbsp;&nbsp;&nbsp;&nbsp;
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <p>如果连接标签中包含了一个 HTTP 首部字段的名称，那么这个首部字段就包含了与一些连接有关的信息，不能将其转发出去。在将报文转发出去之前，必须删除 Connection 首部列出的所有首部字段。由于 Connection 首部可以防止无意中对本地首部的转发，因此将逐跳首部名放入 Connection 首部被称为 “对首部的保护”。还会有一些一定不能被代理转发的逐跳首部（有关 Connection 首部详情见附录 C）。其中包括：</p>
+
   + Prxoy-Authenticate
   + Proxy-Connection
   + Transfer-Encoding
